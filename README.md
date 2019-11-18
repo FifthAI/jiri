@@ -1,3 +1,7 @@
+# This verison can working on Win
+1. go install
+2. use git bash use it
+
 # Jiri
 /jɪəri/ YEER-ee
 
