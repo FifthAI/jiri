@@ -1163,9 +1163,13 @@ func RunHooks(jirix *jiri.X, hooks Hooks, runHookTimeout uint) error {
 			fmt.Fprintf(outFile, "output for hook(%v) for project %q\n", hook.Name, hook.ProjectName)
 			fmt.Fprintf(errFile, "Error for hook(%v) for project %q\n", hook.Name, hook.ProjectName)
 			cmdLine := filepath.Join(hook.ActionPath, hook.Action)
+			cmdLine = strings.Replace(cmdLine, ".sh", ".bat", -1)
 			err = retry.Function(jirix, func() error {
 				ctx, cancel := context.WithTimeout(context.Background(), time.Duration(runHookTimeout)*time.Minute)
 				defer cancel()
+				fmt.Println("------------")
+				fmt.Printf("ctx:%s, cmdLine:%s", ctx, cmdLine)
+				fmt.Println("------------")
 				command := exec.CommandContext(ctx, cmdLine)
 				command.Dir = hook.ActionPath
 				command.Stdin = os.Stdin
